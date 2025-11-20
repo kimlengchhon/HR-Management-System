@@ -1,0 +1,106 @@
+CREATE DATABASE IF NOT EXISTS hrms_db;
+USE hrms_db;
+
+-- Departments
+CREATE TABLE tb_department (
+    dept_id INT PRIMARY KEY AUTO_INCREMENT,
+    dept_name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Positions
+CREATE TABLE tb_position (
+    pos_id INT PRIMARY KEY AUTO_INCREMENT,
+    pos_name VARCHAR(100) NOT NULL,
+    base_salary DECIMAL(10,2) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Employees
+CREATE TABLE tb_employee (
+    emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    emp_code VARCHAR(20) UNIQUE NOT NULL,
+    full_name VARCHAR(150) NOT NULL,
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    dept_id INT,
+    pos_id INT,
+    hire_date DATE,
+    status ENUM('Active', 'Inactive') DEFAULT 'Active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (dept_id) REFERENCES tb_department(dept_id),
+    FOREIGN KEY (pos_id) REFERENCES tb_position(pos_id)
+);
+
+-- Users (Login)
+CREATE TABLE tb_user (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    emp_id INT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('Admin', 'HR', 'Employee') DEFAULT 'Employee',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (emp_id) REFERENCES tb_employee(emp_id)
+);
+
+-- Attendance
+CREATE TABLE tb_attendance (
+    att_id INT PRIMARY KEY AUTO_INCREMENT,
+    emp_id INT,
+    att_date DATE NOT NULL,
+    check_in TIME,
+    check_out TIME,
+    status ENUM('Present', 'Late', 'Absent') DEFAULT 'Present',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (emp_id) REFERENCES tb_employee(emp_id)
+);
+
+-- Leave Requests
+CREATE TABLE tb_leave (
+    leave_id INT PRIMARY KEY AUTO_INCREMENT,
+    emp_id INT,
+    leave_type ENUM('Sick', 'Vacation', 'Personal', 'Emergency') NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    reason TEXT,
+    status ENUM('Pending', 'Approved', 'Rejected') DEFAULT 'Pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (emp_id) REFERENCES tb_employee(emp_id)
+);
+
+-- Payroll
+CREATE TABLE tb_payroll (
+    payroll_id INT PRIMARY KEY AUTO_INCREMENT,
+    emp_id INT,
+    month VARCHAR(7) NOT NULL,
+    base_salary DECIMAL(10,2),
+    deductions DECIMAL(10,2) DEFAULT 0,
+    allowances DECIMAL(10,2) DEFAULT 0,
+    net_salary DECIMAL(10,2),
+    payment_status ENUM('Paid', 'Unpaid') DEFAULT 'Unpaid',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (emp_id) REFERENCES tb_employee(emp_id)
+);
+
+-- Performance
+CREATE TABLE tb_performance (
+    perf_id INT PRIMARY KEY AUTO_INCREMENT,
+    emp_id INT,
+    review_date DATE NOT NULL,
+    rating INT CHECK(rating BETWEEN 1 AND 5),
+    comments TEXT,
+    reviewer_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (emp_id) REFERENCES tb_employee(emp_id)
+);
+
+-- Insert Sample Data
+INSERT INTO tb_department (dept_name) VALUES 
+('IT'), ('HR'), ('Finance'), ('Marketing');
+
+INSERT INTO tb_position (pos_name, base_salary) VALUES 
+('Manager', 5000.00), ('Developer', 3500.00), ('HR Staff', 3000.00), ('Accountant', 3200.00);
+
+-- Default Admin User (username: admin, password: admin123)
+INSERT INTO tb_user (username, password, role) VALUES 
+('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin');
