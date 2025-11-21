@@ -1,6 +1,6 @@
 <?php
 require_once 'config/database.php';
-checkLogin();
+// checkLogin();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $emp_id = $_POST['emp_id'];

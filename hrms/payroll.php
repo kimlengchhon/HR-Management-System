@@ -1,6 +1,6 @@
 <?php
 require_once 'config/database.php';
-checkLogin();
+// checkLogin();
 
 // Handle payment status update
 if (isset($_GET['pay']) && isset($_GET['id'])) {

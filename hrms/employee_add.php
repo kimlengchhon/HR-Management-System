@@ -1,6 +1,6 @@
 <?php
 require_once 'config/database.php';
-checkLogin();
+// checkLogin();
 
 $edit_mode = false;
 $employee = null;

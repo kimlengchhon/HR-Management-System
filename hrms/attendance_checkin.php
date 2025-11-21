@@ -1,6 +1,6 @@
 <?php
 require_once 'config/database.php';
-checkLogin();
+// checkLogin();
 
 $message = '';
 $message_type = '';

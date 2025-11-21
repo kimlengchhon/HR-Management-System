@@ -1,6 +1,6 @@
 <?php
 require_once 'config/database.php';
-checkLogin();
+// checkLogin();
 
 // Handle approve/reject
 if (isset($_GET['action']) && isset($_GET['id'])) {

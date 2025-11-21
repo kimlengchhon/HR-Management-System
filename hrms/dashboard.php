@@ -1,6 +1,6 @@
 <?php
 require_once 'config/database.php';
-checkLogin();
+ //checkLogin();
 
 // Get statistics
 $total_employees = $conn->query("SELECT COUNT(*) FROM tb_employee WHERE status='Active'")->fetchColumn();

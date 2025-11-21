@@ -1,6 +1,6 @@
 <?php
 require_once 'config/database.php';
-checkLogin();
+// checkLogin();
 
 $employees = $conn->query("
     SELECT e.*, d.dept_name, p.pos_name 

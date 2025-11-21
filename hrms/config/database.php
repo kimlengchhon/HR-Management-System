@@ -11,7 +11,7 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
-session_start();
+// REMOVE session_start() from here
 
 function checkLogin() {
     if (!isset($_SESSION['user_id'])) {
