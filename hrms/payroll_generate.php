@@ -45,18 +45,20 @@ $employees = $conn->query("
     <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
-    <nav class="navbar">
-        <h2>HR Management System</h2>
-        <div class="nav-links">
-            <a href="dashboard.php">Dashboard</a>
-            <a href="employees.php">Employees</a>
-            <a href="attendance.php">Attendance</a>
-            <a href="leave.php">Leave</a>
-            <a href="payroll.php">Payroll</a>
-            <a href="performance.php">Performance</a>
-            <a href="logout.php">Logout</a>
-        </div>
-    </nav>
+     <nav class="navbar">
+    <h2>HR Management System</h2>
+    <div class="nav-links">
+        <a href="dashboard.php">Dashboard</a>
+        <a href="employees.php">Employees</a>
+        <a href="departments.php">Departments</a>
+        <a href="recruitment.php">Recruitment</a>
+        <a href="attendance.php">Attendance</a>
+        <a href="leave.php">Leave</a>
+        <a href="payroll.php">Payroll</a>
+        <a href="performance.php">Performance</a>
+        <a href="logout.php">Logout</a>
+    </div>
+</nav>
 
     <div class="container">
         <h1 style="margin-bottom: 30px;">Generate Payroll</h1>
